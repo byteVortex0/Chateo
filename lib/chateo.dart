@@ -1,5 +1,9 @@
-import 'package:chateo/features/onboarding/ui/onboarding_screen.dart';
+import 'package:chateo/core/app/theme_cubit/theme_cubit.dart';
+import 'package:chateo/core/di/injection.dart';
+import 'package:chateo/core/routes/app_routes.dart';
+import 'package:chateo/core/utils/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Chateo extends StatelessWidget {
@@ -12,13 +16,24 @@ class Chateo extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => child!,
-      child: MaterialApp(
-        title: 'Chateo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      child: BlocProvider(
+        create: (BuildContext context) => sl<ThemeCubit>(),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+              title: 'Chateo',
+              debugShowCheckedModeBanner: false,
+              darkTheme: ThemeManager.darkTheme,
+              theme: ThemeManager.lightTheme,
+              themeMode:
+                  context.read<ThemeCubit>().isDark
+                      ? ThemeMode.dark
+                      : ThemeMode.light,
+              initialRoute: AppRoutes.onboarding,
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+            );
+          },
         ),
-        home: OnBoardingScreen(),
       ),
     );
   }
