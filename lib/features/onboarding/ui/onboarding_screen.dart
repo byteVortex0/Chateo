@@ -1,5 +1,4 @@
 import 'package:chateo/core/extensions/context_extension.dart';
-import 'package:chateo/core/utils/color_manager.dart';
 import 'package:chateo/core/utils/fonts/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +40,7 @@ class OnBoardingScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: LightColorManager.brandColorLight,
+                  backgroundColor: context.color.brandColor,
                   padding: EdgeInsets.symmetric(vertical: 10.h),
                 ),
                 child: Text(
