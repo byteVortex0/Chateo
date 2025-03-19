@@ -1,7 +1,7 @@
 import 'package:chateo/core/app/theme_cubit/theme_cubit.dart';
 import 'package:chateo/core/di/injection.dart';
 import 'package:chateo/core/routes/app_routes.dart';
-import 'package:chateo/core/utils/theme_manager.dart';
+import 'package:chateo/core/utils/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
