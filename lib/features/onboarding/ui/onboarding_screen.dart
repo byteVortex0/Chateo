@@ -1,5 +1,6 @@
+import 'package:chateo/core/extensions/context_extension.dart';
 import 'package:chateo/core/utils/color_manager.dart';
-import 'package:chateo/core/utils/style_manager.dart';
+import 'package:chateo/core/utils/fonts/style_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,12 +19,12 @@ class OnBoardingScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset('assets/images/svgs/onboarding.svg'),
+                    SvgPicture.asset(context.asset.onBoarding!),
                     SizedBox(height: 20.h),
                     Text(
                       'Connect easily with\nyour family and friends\nover countries',
                       textAlign: TextAlign.center,
-                      style: StyleManager.black24Bold,
+                      style: StyleManager.black24Bold(context),
                     ),
                   ],
                 ),
@@ -31,7 +32,7 @@ class OnBoardingScreen extends StatelessWidget {
             ),
             Text(
               'Terms & Privacy Policy',
-              style: StyleManager.secondary14SemiBold,
+              style: StyleManager.secondary14SemiBold(context),
             ),
             SizedBox(height: 7.h),
             Container(
@@ -40,12 +41,12 @@ class OnBoardingScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: LightColorManager.primary,
+                  backgroundColor: LightColorManager.brandColorLight,
                   padding: EdgeInsets.symmetric(vertical: 10.h),
                 ),
                 child: Text(
                   'Start Messaging',
-                  style: StyleManager.white16SemiBold,
+                  style: StyleManager.offWhite16SemiBold,
                 ),
               ),
             ),
