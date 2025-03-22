@@ -10,6 +10,11 @@ class ThemeManager {
       ColorThemeExtension.light,
       AssetThemeExtension.light,
     ],
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+    ),
     // textTheme: TextTheme(
     //   headlineSmall: GoogleFonts.mulish(
     //     fontSize: 24.sp,
@@ -24,6 +29,11 @@ class ThemeManager {
       ColorThemeExtension.dark,
       AssetThemeExtension.dark,
     ],
+    appBarTheme: const AppBarTheme(
+      backgroundColor: DarkColorManager.bgDark,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+    ),
     // textTheme: TextTheme(
     //   headlineSmall: GoogleFonts.mulish(
     //     fontSize: 24.sp,

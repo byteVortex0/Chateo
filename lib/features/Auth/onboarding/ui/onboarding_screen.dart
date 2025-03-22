@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/common/widgets/custom_elevated_button.dart';
+import '../../../../core/routes/app_routes.dart';
+
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
@@ -34,20 +37,11 @@ class OnBoardingScreen extends StatelessWidget {
               style: StyleManager.secondary14SemiBold(context),
             ),
             SizedBox(height: 7.h),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: context.color.brandColor,
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                ),
-                child: Text(
-                  'Start Messaging',
-                  style: StyleManager.offWhite16SemiBold,
-                ),
-              ),
+            CustomElevatedButton(
+              title: 'Start Messaging',
+              onTap: () {
+                context.pushNamed(AppRoutes.loginByPhone);
+              },
             ),
             SizedBox(height: 20.h),
           ],

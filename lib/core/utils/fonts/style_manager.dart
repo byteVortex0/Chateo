@@ -12,10 +12,47 @@ class StyleManager {
     fontWeight: FontWeightHelper.bold,
   );
 
+  static TextStyle black14SemiBold(BuildContext context) => GoogleFonts.mulish(
+    color: context.color.secondaryColor,
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static TextStyle black18SemiBold(BuildContext context) => GoogleFonts.mulish(
+    color: context.color.secondaryColor,
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static TextStyle neutral10Regular(BuildContext context) => GoogleFonts.mulish(
+    color: context.color.neutralColor,
+    fontSize: 10.sp,
+    fontWeight: FontWeightHelper.regular,
+  );
+
+  static TextStyle black28Bold(BuildContext context) => GoogleFonts.mulish(
+    color: context.color.secondaryColor,
+    fontSize: 28.sp,
+    fontWeight: FontWeightHelper.bold,
+  );
+
+  static TextStyle offWhite14SemiBold(BuildContext context) =>
+      GoogleFonts.mulish(
+        color: context.color.hintTextFieldColor,
+        fontSize: 14.sp,
+        fontWeight: FontWeightHelper.semiBold,
+      );
+
   static TextStyle offWhite16SemiBold = GoogleFonts.mulish(
     color: LightColorManager.offWhite,
     fontSize: 16.sp,
     fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static TextStyle offWhite12Regular = GoogleFonts.mulish(
+    color: LightColorManager.hintTextField,
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.regular,
   );
 
   static TextStyle secondary14SemiBold(BuildContext context) =>

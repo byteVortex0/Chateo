@@ -2,19 +2,38 @@ import 'package:chateo/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 
 class AssetThemeExtension extends ThemeExtension<AssetThemeExtension> {
-  final String? prfile;
+  final String? profile;
+  final String? profileImage;
   final String? onBoarding;
+  final String? chats;
+  final String? contacts;
+  final String? more;
 
-  const AssetThemeExtension({required this.prfile, required this.onBoarding});
+  const AssetThemeExtension({
+    required this.profile,
+    required this.profileImage,
+    required this.onBoarding,
+    required this.chats,
+    required this.contacts,
+    required this.more,
+  });
 
   @override
   ThemeExtension<AssetThemeExtension> copyWith({
-    String? prfile,
+    String? profile,
+    String? profileImage,
     String? onBoarding,
+    String? chats,
+    String? contacts,
+    String? more,
   }) {
     return AssetThemeExtension(
-      prfile: prfile ?? this.prfile,
+      profile: profile ?? this.profile,
+      profileImage: profileImage ?? this.profileImage,
       onBoarding: onBoarding ?? this.onBoarding,
+      chats: chats ?? this.chats,
+      contacts: contacts ?? this.contacts,
+      more: more ?? this.more,
     );
   }
 
@@ -27,17 +46,29 @@ class AssetThemeExtension extends ThemeExtension<AssetThemeExtension> {
       return this;
     }
     return AssetThemeExtension(
-      prfile: other.prfile,
+      profile: other.profile,
+      profileImage: other.profileImage,
       onBoarding: other.onBoarding,
+      chats: other.chats,
+      contacts: other.contacts,
+      more: other.more,
     );
   }
 
   static const AssetThemeExtension light = AssetThemeExtension(
-    prfile: AppImages.profileLight,
+    profile: AppImages.profileLight,
+    profileImage: AppImages.profileImageLight,
     onBoarding: AppImages.onBoardingLight,
+    chats: AppImages.chatsLight,
+    contacts: AppImages.contactsLight,
+    more: AppImages.moreLight,
   );
   static const AssetThemeExtension dark = AssetThemeExtension(
-    prfile: AppImages.profileDark,
+    profile: AppImages.profileDark,
+    profileImage: AppImages.profileImageDark,
     onBoarding: AppImages.onBoardingDark,
+    chats: AppImages.chatsDark,
+    contacts: AppImages.contactsDark,
+    more: AppImages.moreDark,
   );
 }
