@@ -1,14 +1,34 @@
 import 'package:chateo/core/routes/base_routes.dart';
-import 'package:chateo/features/onboarding/ui/onboarding_screen.dart';
+import 'package:chateo/features/Auth/loginByPhone/ui/login_by_phone.dart';
+import 'package:chateo/features/Auth/loginPersonalInfo/ui/login_profile_info.dart';
+import 'package:chateo/features/Auth/loginVerificationOTP/ui/login_verification_otp.dart';
+import 'package:chateo/features/Auth/onboarding/ui/onboarding_screen.dart';
+import 'package:chateo/features/conversation/chats/ui/chats_screen.dart';
+import 'package:chateo/features/conversation/personalChat/ui/personal_chat.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRoutes {
   static const String onboarding = 'onboarding';
+  static const String loginByPhone = 'loginByPhone';
+  static const String loginVerificationOTP = 'loginVerificationOTP';
+  static const String loginProfileInfo = 'loginProfileInfo';
+  static const String chatsScreen = 'chats';
+  static const String personalChat = 'personalChat';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case onboarding:
         return BaseRoutes(page: OnBoardingScreen());
+      case loginByPhone:
+        return BaseRoutes(page: LoginByPhone());
+      case loginVerificationOTP:
+        return BaseRoutes(page: LoginVerificationOTP());
+      case loginProfileInfo:
+        return BaseRoutes(page: LoginProfileInfo());
+      case chatsScreen:
+        return BaseRoutes(page: ChatsScreen());
+      case personalChat:
+        return BaseRoutes(page: PersonalChat());
       default:
         return null;
     }
