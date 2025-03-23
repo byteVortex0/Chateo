@@ -8,8 +8,25 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/routes/app_routes.dart';
 
-class LoginProfileInfo extends StatelessWidget {
+class LoginProfileInfo extends StatefulWidget {
   const LoginProfileInfo({super.key});
+
+  @override
+  State<LoginProfileInfo> createState() => _LoginProfileInfoState();
+}
+
+class _LoginProfileInfoState extends State<LoginProfileInfo> {
+  final _formKey = GlobalKey<FormState>();
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +44,24 @@ class LoginProfileInfo extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(context.asset.profile!),
-                        SizedBox(height: 20.h),
-                        CustomTextField(
-                          hint: 'First Name (Required)',
-                          controller: TextEditingController(),
-                        ),
-                        SizedBox(height: 10.h),
-                        CustomTextField(
-                          hint: 'Last Name (Optional)',
-                          controller: TextEditingController(),
-                        ),
-                      ],
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(context.asset.profile!),
+                          SizedBox(height: 20.h),
+                          CustomTextField(
+                            hint: 'First Name (Required)',
+                            controller: firstNameController,
+                          ),
+                          SizedBox(height: 10.h),
+                          CustomTextField(
+                            hint: 'Last Name (Optional)',
+                            controller: lastNameController,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   CustomElevatedButton(

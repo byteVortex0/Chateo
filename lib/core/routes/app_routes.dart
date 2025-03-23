@@ -16,13 +16,19 @@ class AppRoutes {
   static const String personalChat = 'personalChat';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case onboarding:
         return BaseRoutes(page: OnBoardingScreen());
       case loginByPhone:
         return BaseRoutes(page: LoginByPhone());
       case loginVerificationOTP:
-        return BaseRoutes(page: LoginVerificationOTP());
+        return BaseRoutes(
+          page: LoginVerificationOTP(
+            verificationId: (args as Map<String, String>)['verificationId']!,
+            phoneNumber: args['phoneNumber']!,
+          ),
+        );
       case loginProfileInfo:
         return BaseRoutes(page: LoginProfileInfo());
       case chatsScreen:
