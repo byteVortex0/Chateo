@@ -74,10 +74,10 @@ class LoginByPhone extends StatelessWidget {
                                   onChanged: (phone) {
                                     phoneNumber = phone.completeNumber;
                                   },
-
                                   validator: (value) {
-                                    if (value.toString().isEmpty) {
-                                      return 'Please enter your phone number';
+                                    if (value == null ||
+                                        value.number.length < 10) {
+                                      return 'Invalid Mobile Number';
                                     }
                                     return null;
                                   },
@@ -90,7 +90,6 @@ class LoginByPhone extends StatelessWidget {
                       BlocConsumer<LoginByPhoneCubit, LoginByPhoneState>(
                         listener: (context, state) {
                           if (state is LoginByPhoneSendCode) {
-                            //TODO: refactor
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Code sent successfully')),
                             );
@@ -102,19 +101,31 @@ class LoginByPhone extends StatelessWidget {
                               },
                             );
                           } else if (state is LoginByPhoneFailed) {
-                            //TODO: refactor
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(state.message)),
                             );
                           }
                         },
                         builder: (context, state) {
+                          if (phoneNumber != '' ||
+                              state is LoginByPhoneLoading) {
+                            return Center(child: CircularProgressIndicator());
+                          }
                           return CustomElevatedButton(
                             title: 'Continue',
                             onTap: () async {
-                              if (formKey.currentState!.validate()) {
+                              if (phoneNumber != '' &&
+                                  formKey.currentState!.validate()) {
                                 context.read<LoginByPhoneCubit>().loginByPhone(
                                   phoneNumber: phoneNumber,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Please enter a valid phone number',
+                                    ),
+                                  ),
                                 );
                               }
                             },

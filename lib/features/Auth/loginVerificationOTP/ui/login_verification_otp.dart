@@ -49,7 +49,6 @@ class LoginVerificationOTP extends StatelessWidget {
                               ),
                               SizedBox(height: 5.h),
                               Text(
-                                //TODO: add number
                                 'We have sent you an SMS with the code\nto $phoneNumber',
                                 style: StyleManager.black14SemiBold(context),
                                 textAlign: TextAlign.center,
@@ -65,12 +64,10 @@ class LoginVerificationOTP extends StatelessWidget {
                       BlocConsumer<LoginByPhoneCubit, LoginByPhoneState>(
                         listener: (context, state) {
                           if (state is LoginByPhoneFailed) {
-                            //TODO: refactor
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(state.message)),
                             );
                           } else if (state is LoginByPhoneSendCode) {
-                            //TODO: refactor
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Code sent successfully')),
                             );

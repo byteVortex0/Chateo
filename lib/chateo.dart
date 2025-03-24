@@ -25,7 +25,6 @@ class Chateo extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               darkTheme: ThemeManager.darkTheme,
               theme: ThemeManager.lightTheme,
-              //TODO: refactor
               themeMode:
                   context.read<ThemeCubit>().isDark
                       ? ThemeMode.dark
