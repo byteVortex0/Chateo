@@ -6,18 +6,24 @@ import '../../service/shared_pref/shared_pref.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(ThemeInitial());
+  ThemeCubit() : super(ThemeInitial()) {
+    loadTheme();
+  }
 
-  bool isDark =
-      PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+  Future<void> loadTheme() async {
+    final savedTheme = await SharedPref.getValue(PrefKey.isDark) as bool?;
+    final defaultTheme =
+        PlatformDispatcher.instance.platformBrightness == Brightness.dark;
+
+    emit(ChangeThemeMode(isDark: savedTheme ?? defaultTheme));
+  }
 
   Future<void> changeThemeMode({bool? sharedMode}) async {
-    if (sharedMode != null) {
-      isDark = sharedMode;
-    } else {
-      isDark = !isDark;
-      await SharedPref.setValue(PrefKey.isDark, isDark);
-    }
-    emit(ChangeThemeMode(isDark: isDark));
+    final newMode = sharedMode ?? !isDark;
+    await SharedPref.setValue(PrefKey.isDark, newMode);
+    emit(ChangeThemeMode(isDark: newMode));
   }
+
+  bool get isDark =>
+      state is ChangeThemeMode && (state as ChangeThemeMode).isDark;
 }

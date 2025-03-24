@@ -3,7 +3,8 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-//TODO: refactor this class
+// refactor this class
+//* Done by creating bloc
 
 class FirebaseAuthentication {
   FirebaseAuthentication._();
