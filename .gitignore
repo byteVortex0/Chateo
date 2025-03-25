@@ -32,7 +32,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-firebase_authentication.darts
+lib/core/service/firebase/firebase_authentication.dart
+.env.dev
 
 # Symbolication related
 app.*.symbols
