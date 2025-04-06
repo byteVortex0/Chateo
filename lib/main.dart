@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chateo/chateo.dart';
 import 'package:chateo/core/app/env_variables.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,9 +15,6 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await EnvVariables().init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  log('EnvVariables().supabaseUrl: ${EnvVariables().supabaseUrl}');
-  log('EnvVariables().supabaseAnonKey: ${EnvVariables().supabaseAnonKey}');
 
   await Supabase.initialize(
     url: EnvVariables().supabaseUrl,

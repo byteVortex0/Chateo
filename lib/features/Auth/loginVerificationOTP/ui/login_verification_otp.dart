@@ -56,7 +56,10 @@ class LoginVerificationOTP extends StatelessWidget {
 
                               SizedBox(height: 20.h),
 
-                              OTPFields(verificationId: verificationId),
+                              OTPFields(
+                                verificationId: verificationId,
+                                phoneNumber: phoneNumber,
+                              ),
                             ],
                           ),
                         ),

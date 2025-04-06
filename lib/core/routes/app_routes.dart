@@ -6,6 +6,11 @@ import 'package:chateo/features/Auth/onboarding/ui/onboarding_screen.dart';
 import 'package:chateo/features/conversation/chats/ui/chats_screen.dart';
 import 'package:chateo/features/conversation/personalChat/ui/personal_chat.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/Auth/loginPersonalInfo/logic/add_personal_info/add_personal_info_cubit.dart';
+import '../../features/Auth/loginPersonalInfo/logic/upload_images/upload_images_cubit.dart';
+import '../di/injection.dart';
 
 class AppRoutes {
   static const String onboarding = 'onboarding';
@@ -30,7 +35,19 @@ class AppRoutes {
           ),
         );
       case loginProfileInfo:
-        return BaseRoutes(page: LoginProfileInfo());
+        return BaseRoutes(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider<AddPersonalInfoCubit>(
+                create: (context) => sl<AddPersonalInfoCubit>(),
+              ),
+              BlocProvider<UploadImagesCubit>(
+                create: (context) => sl<UploadImagesCubit>(),
+              ),
+            ],
+            child: LoginProfileInfo(phoneNumber: args as String),
+          ),
+        );
       case chatsScreen:
         return BaseRoutes(page: ChatsScreen());
       case personalChat:

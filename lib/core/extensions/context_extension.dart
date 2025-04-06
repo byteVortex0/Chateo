@@ -20,6 +20,10 @@ extension ContextExtension on BuildContext {
   Future<dynamic> pushReplacementNamed(String routeName) =>
       Navigator.of(this).pushReplacementNamed(routeName);
 
-  Future<dynamic> pushNamedAndRemoveUntil(String routeName) =>
-      Navigator.of(this).pushNamedAndRemoveUntil(routeName, (route) => false);
+  Future<dynamic> pushNamedAndRemoveUntil(
+    String routeName, {
+    Object? arguments,
+  }) => Navigator.of(
+    this,
+  ).pushNamedAndRemoveUntil(routeName, arguments: arguments, (route) => false);
 }

@@ -14,10 +14,14 @@ class Contacts extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CustomTextField(hint: 'Search', controller: TextEditingController()),
+          CustomTextFormField(
+            hint: 'Search',
+            controller: TextEditingController(),
+          ),
           SizedBox(height: 10.h),
           Expanded(
             child: ListView.separated(
+              padding: EdgeInsets.only(bottom: 30.h),
               itemCount: 10,
               itemBuilder: (context, index) => ChatItem(),
               separatorBuilder: (context, index) => SizedBox(height: 10.w),
