@@ -4,21 +4,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/fonts/style_manager.dart';
 
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
+class CustomTextFormField extends StatelessWidget {
+  const CustomTextFormField({
     super.key,
     required this.hint,
     required this.controller,
+    this.validator,
   });
 
   final String hint;
   final TextEditingController controller;
+  final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.w),
-      child: TextField(
+      child: TextFormField(
         style: StyleManager.black14SemiBold(context),
         controller: controller,
         decoration: InputDecoration(
@@ -31,6 +33,14 @@ class CustomTextField extends StatelessWidget {
             borderSide: BorderSide.none,
           ),
         ),
+        validator:
+            validator ??
+            (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your $hint';
+              }
+              return null;
+            },
       ),
     );
   }

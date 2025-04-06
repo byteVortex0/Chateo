@@ -1,10 +1,13 @@
 import 'package:chateo/core/app/theme_cubit/theme_cubit.dart';
 import 'package:chateo/core/di/injection.dart';
 import 'package:chateo/core/routes/app_routes.dart';
+import 'package:chateo/core/service/shared_pref/shared_pref.dart';
 import 'package:chateo/core/utils/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'core/service/shared_pref/pref_key.dart';
 
 class Chateo extends StatelessWidget {
   const Chateo({super.key});
@@ -29,7 +32,10 @@ class Chateo extends StatelessWidget {
                   context.read<ThemeCubit>().isDark
                       ? ThemeMode.dark
                       : ThemeMode.light,
-              initialRoute: AppRoutes.onboarding,
+              initialRoute:
+                  SharedPref.getValue(PrefKey.isLoggedIn) == true
+                      ? AppRoutes.chatsScreen
+                      : AppRoutes.onboarding,
               onGenerateRoute: AppRoutes.onGenerateRoute,
             );
           },

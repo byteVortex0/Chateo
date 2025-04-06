@@ -10,9 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OTPFields extends StatefulWidget {
-  const OTPFields({super.key, required this.verificationId});
+  const OTPFields({
+    super.key,
+    required this.verificationId,
+    required this.phoneNumber,
+  });
 
   final String verificationId;
+  final String phoneNumber;
 
   @override
   State<OTPFields> createState() => _OTPFieldsState();
@@ -75,7 +80,10 @@ class _OTPFieldsState extends State<OTPFields> {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text('Verified successfully')));
-          context.pushNamedAndRemoveUntil(AppRoutes.loginProfileInfo);
+          context.pushNamedAndRemoveUntil(
+            AppRoutes.loginProfileInfo,
+            arguments: widget.phoneNumber,
+          );
         } else if (state is VerifyOtpFailed) {
           ScaffoldMessenger.of(
             context,
@@ -95,44 +103,34 @@ class _OTPFieldsState extends State<OTPFields> {
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 5),
                       alignment: Alignment.center,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minWidth: 50.w,
-                            maxWidth: 70.w,
-                          ),
-                          child: TextField(
-                            controller: _controllers[index],
-                            focusNode: _focusNodes[index],
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            maxLength: 1,
-                            style: StyleManager.black28Bold(context),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              counterText: "",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onChanged: (value) => _onChanged(value, index),
-                            onSubmitted: (value) {
-                              if (index == 5) {
-                                String otpCode =
-                                    _controllers.map((e) => e.text).join();
-                                log("رمز التحقق: $otpCode");
-                              }
-                            },
-                            onTapOutside:
-                                (_) => FocusScope.of(context).unfocus(),
-                            onEditingComplete: () async {
-                              if (index < 5) {
-                                _focusNodes[index + 1].requestFocus();
-                              }
-                            },
+                      child: TextField(
+                        controller: _controllers[index],
+                        focusNode: _focusNodes[index],
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.center,
+                        maxLength: 1,
+                        style: StyleManager.black28Bold(context),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          counterText: "",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        onChanged: (value) => _onChanged(value, index),
+                        onSubmitted: (value) {
+                          if (index == 5) {
+                            String otpCode =
+                                _controllers.map((e) => e.text).join();
+                            log("رمز التحقق: $otpCode");
+                          }
+                        },
+                        onTapOutside: (_) => FocusScope.of(context).unfocus(),
+                        onEditingComplete: () async {
+                          if (index < 5) {
+                            _focusNodes[index + 1].requestFocus();
+                          }
+                        },
                       ),
                     ),
                   ),

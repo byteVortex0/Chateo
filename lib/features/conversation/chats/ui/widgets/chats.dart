@@ -41,10 +41,11 @@ class _ChatsState extends State<Chats> {
           SizedBox(height: 10.h),
           Divider(),
           SizedBox(height: 10.h),
-          CustomTextField(hint: 'Search', controller: searchController),
+          CustomTextFormField(hint: 'Search', controller: searchController),
           SizedBox(height: 10.h),
           Expanded(
             child: ListView.separated(
+              padding: EdgeInsets.only(bottom: 30.h),
               itemCount: 20,
               itemBuilder: (context, index) => ChatItem(),
               separatorBuilder: (context, index) => SizedBox(height: 10.w),

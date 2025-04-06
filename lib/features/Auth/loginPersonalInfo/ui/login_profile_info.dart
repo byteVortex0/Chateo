@@ -1,15 +1,24 @@
+import 'dart:developer';
+
 import 'package:chateo/core/common/widgets/custom_elevated_button.dart';
 import 'package:chateo/core/common/widgets/custom_text_field.dart';
 import 'package:chateo/core/extensions/context_extension.dart';
+import 'package:chateo/core/service/shared_pref/shared_pref.dart';
 import 'package:chateo/core/utils/fonts/style_manager.dart';
+import 'package:chateo/features/Auth/loginPersonalInfo/logic/add_personal_info/add_personal_info_cubit.dart';
+import 'package:chateo/features/Auth/loginPersonalInfo/ui/widgets/select_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/service/shared_pref/pref_key.dart';
+import '../data/models/personal_info_model.dart';
 
 class LoginProfileInfo extends StatefulWidget {
-  const LoginProfileInfo({super.key});
+  const LoginProfileInfo({super.key, required this.phoneNumber});
+
+  final String phoneNumber;
 
   @override
   State<LoginProfileInfo> createState() => _LoginProfileInfoState();
@@ -20,6 +29,7 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  String? selectImage;
 
   @override
   void dispose() {
@@ -49,14 +59,20 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(context.asset.profile!),
+                          SelectImage(
+                            onImageSelected: (imageUrl) {
+                              setState(() {
+                                selectImage = imageUrl;
+                              });
+                            },
+                          ),
                           SizedBox(height: 20.h),
-                          CustomTextField(
+                          CustomTextFormField(
                             hint: 'First Name (Required)',
                             controller: firstNameController,
                           ),
                           SizedBox(height: 10.h),
-                          CustomTextField(
+                          CustomTextFormField(
                             hint: 'Last Name (Optional)',
                             controller: lastNameController,
                           ),
@@ -64,11 +80,53 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                       ),
                     ),
                   ),
-                  CustomElevatedButton(
-                    title: 'Save',
-                    onTap: () {
-                      context.pushNamedAndRemoveUntil(AppRoutes.chatsScreen);
+                  BlocListener<AddPersonalInfoCubit, AddPersonalInfoState>(
+                    listener: (context, state) {
+                      if (state is AddPersonalInfoSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Saved successfully'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+
+                        SharedPref.setValue(PrefKey.isLoggedIn, true);
+
+                        context.pushNamedAndRemoveUntil(AppRoutes.chatsScreen);
+                      } else if (state is AddPersonalInfoFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.error),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     },
+                    child: CustomElevatedButton(
+                      title: 'Save',
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (selectImage == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please select an image'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            return;
+                          }
+                          log('Phone Number: ${widget.phoneNumber}');
+                          context.read<AddPersonalInfoCubit>().addPersonalInfo(
+                            personalInfoModel: PersonalInfoModel(
+                              phoneNumber: widget.phoneNumber,
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              imageUrl: selectImage!,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   SizedBox(height: 20.h),
                 ],
