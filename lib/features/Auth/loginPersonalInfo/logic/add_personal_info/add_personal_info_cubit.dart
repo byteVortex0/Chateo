@@ -22,27 +22,60 @@ class AddPersonalInfoCubit extends Cubit<AddPersonalInfoState> {
 
     try {
       log('Adding personal info: ${personalInfoModel.toJson()}');
-      final response =
+
+      // Check if the user already exists
+      final existingUserResponse =
           await supabase
               .from('users')
-              .insert(personalInfoModel.toJson())
-              .select();
+              .select('id')
+              .eq('phone_number', personalInfoModel.phoneNumber)
+              .limit(1)
+              .maybeSingle();
 
-      log('Response: $response');
-      if (response.isEmpty) {
-        emit(
-          AddPersonalInfoFailure(
-            error: 'Failed to add user: No response received',
-          ),
-        );
-        return;
+      if (existingUserResponse != null && existingUserResponse.isNotEmpty) {
+        final upadateResponse =
+            await supabase
+                .from('users')
+                .update(personalInfoModel.toJson())
+                .eq('id', existingUserResponse['id'])
+                .select();
+
+        log('Response: $upadateResponse');
+        if (upadateResponse.isEmpty) {
+          emit(
+            AddPersonalInfoFailure(
+              error: 'Failed to add user: No response received',
+            ),
+          );
+          return;
+        }
+
+        SharedPref.setValue(PrefKey.userId, existingUserResponse['id']);
+
+        emit(AddPersonalInfoSuccess());
+      } else {
+        final response =
+            await supabase
+                .from('users')
+                .insert(personalInfoModel.toJson())
+                .select();
+
+        log('Response: $response');
+        if (response.isEmpty) {
+          emit(
+            AddPersonalInfoFailure(
+              error: 'Failed to add user: No response received',
+            ),
+          );
+          return;
+        }
+
+        final userId = response[0]['id'];
+
+        SharedPref.setValue(PrefKey.userId, userId);
+
+        emit(AddPersonalInfoSuccess());
       }
-
-      final userId = response[0]['id'];
-
-      SharedPref.setValue(PrefKey.userId, userId);
-
-      emit(AddPersonalInfoSuccess());
     } catch (e) {
       log('Error adding personal info: $e');
       emit(AddPersonalInfoFailure(error: 'Failed to add user: $e'));

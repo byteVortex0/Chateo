@@ -68,12 +68,12 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                           ),
                           SizedBox(height: 20.h),
                           CustomTextFormField(
-                            hint: 'First Name (Required)',
+                            hint: 'First Name',
                             controller: firstNameController,
                           ),
                           SizedBox(height: 10.h),
                           CustomTextFormField(
-                            hint: 'Last Name (Optional)',
+                            hint: 'Last Name',
                             controller: lastNameController,
                           ),
                         ],

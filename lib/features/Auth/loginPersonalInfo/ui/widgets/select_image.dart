@@ -22,10 +22,7 @@ class SelectImage extends StatelessWidget {
           onImageSelected(state.image);
         } else if (state is UploadImagesFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to upload image: ${state.error}'),
-              backgroundColor: Colors.red,
-            ),
+            SnackBar(content: Text(state.error), backgroundColor: Colors.red),
           );
         } else if (state is UploadImagesLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -45,8 +42,8 @@ class SelectImage extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               child: Image.network(
                 state.image,
-                width: double.infinity,
-                height: 100.h,
+                width: 200.w,
+                height: 200.h,
                 fit: BoxFit.cover,
               ),
             )
