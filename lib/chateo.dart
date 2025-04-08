@@ -34,7 +34,7 @@ class Chateo extends StatelessWidget {
                       : ThemeMode.light,
               initialRoute:
                   SharedPref.getValue(PrefKey.isLoggedIn) == true
-                      ? AppRoutes.chatsScreen
+                      ? AppRoutes.mainScreen
                       : AppRoutes.onboarding,
               onGenerateRoute: AppRoutes.onGenerateRoute,
             );

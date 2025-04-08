@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/common/widgets/custom_text_field.dart';
-import '../../chats/ui/widgets/chat_item.dart';
+import '../../../../core/common/widgets/custom_list_item.dart';
 
 class Contacts extends StatelessWidget {
   const Contacts({super.key});
@@ -23,7 +23,7 @@ class Contacts extends StatelessWidget {
             child: ListView.separated(
               padding: EdgeInsets.only(bottom: 30.h),
               itemCount: 10,
-              itemBuilder: (context, index) => ChatItem(),
+              itemBuilder: (context, index) => CustomListItem(),
               separatorBuilder: (context, index) => SizedBox(height: 10.w),
             ),
           ),
