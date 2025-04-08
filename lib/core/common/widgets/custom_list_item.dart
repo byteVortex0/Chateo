@@ -2,11 +2,11 @@ import 'package:chateo/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/utils/color_manager.dart';
-import '../../../../../core/utils/fonts/style_manager.dart';
+import '../../utils/color_manager.dart';
+import '../../utils/fonts/style_manager.dart';
 
-class ChatItem extends StatelessWidget {
-  const ChatItem({super.key});
+class CustomListItem extends StatelessWidget {
+  const CustomListItem({super.key});
 
   @override
   Widget build(BuildContext context) {

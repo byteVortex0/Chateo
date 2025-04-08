@@ -80,7 +80,7 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                       ),
                     ),
                   ),
-                  BlocListener<AddPersonalInfoCubit, AddPersonalInfoState>(
+                  BlocConsumer<AddPersonalInfoCubit, AddPersonalInfoState>(
                     listener: (context, state) {
                       if (state is AddPersonalInfoSuccess) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -92,7 +92,7 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
 
                         SharedPref.setValue(PrefKey.isLoggedIn, true);
 
-                        context.pushNamedAndRemoveUntil(AppRoutes.chatsScreen);
+                        context.pushNamedAndRemoveUntil(AppRoutes.mainScreen);
                       } else if (state is AddPersonalInfoFailure) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -102,31 +102,38 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                         );
                       }
                     },
-                    child: CustomElevatedButton(
-                      title: 'Save',
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (selectImage == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please select an image'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                            return;
+                    builder: (context, state) {
+                      if (state is AddPersonalInfoLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return CustomElevatedButton(
+                        title: 'Save',
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            if (selectImage == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please select an image'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                              return;
+                            }
+                            log('Phone Number: ${widget.phoneNumber}');
+                            context
+                                .read<AddPersonalInfoCubit>()
+                                .addPersonalInfo(
+                                  personalInfoModel: PersonalInfoModel(
+                                    phoneNumber: widget.phoneNumber,
+                                    firstName: firstNameController.text,
+                                    lastName: lastNameController.text,
+                                    imageUrl: selectImage!,
+                                  ),
+                                );
                           }
-                          log('Phone Number: ${widget.phoneNumber}');
-                          context.read<AddPersonalInfoCubit>().addPersonalInfo(
-                            personalInfoModel: PersonalInfoModel(
-                              phoneNumber: widget.phoneNumber,
-                              firstName: firstNameController.text,
-                              lastName: lastNameController.text,
-                              imageUrl: selectImage!,
-                            ),
-                          );
-                        }
-                      },
-                    ),
+                        },
+                      );
+                    },
                   ),
                   SizedBox(height: 20.h),
                 ],

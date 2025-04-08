@@ -38,14 +38,11 @@ class SelectImage extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         return state is UploadImagesSuccess
-            ? ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(
-                state.image,
-                width: 200.w,
-                height: 200.h,
-                fit: BoxFit.cover,
-              ),
+            ? CircleAvatar(
+              radius: 30.r,
+              backgroundImage: NetworkImage(state.image),
+              onBackgroundImageError:
+                  (_, __) => Icon(Icons.error, size: 40.w, color: Colors.red),
             )
             : Container(
               height: 80.h,

@@ -42,8 +42,8 @@ class UploadImagesCubit extends Cubit<UploadImagesState> {
     final cropperImg = await ImageCropper().cropImage(
       sourcePath: pickedImage.path,
       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      maxHeight: 200,
-      maxWidth: 200,
+      maxHeight: 100,
+      maxWidth: 100,
       compressQuality: 70,
       //TODO: check if this is needed
       // compressFormat: ImageCompressFormat.jpg,

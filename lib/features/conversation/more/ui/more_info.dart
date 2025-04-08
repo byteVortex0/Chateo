@@ -1,5 +1,7 @@
 import 'package:chateo/core/extensions/context_extension.dart';
+import 'package:chateo/features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,25 +18,55 @@ class MoreInfo extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                SvgPicture.asset(context.asset.profileImage!),
-                SizedBox(width: 10.w),
-                Column(
-                  children: [
-                    Text(
-                      'Almayra Zamzamy',
-                      style: StyleManager.secondary14SemiBold(context),
-                    ),
-                    Text(
-                      //TODO: change number
-                      '+62 1309 - 1710 - 1920',
-                      style: StyleManager.offWhite12Regular,
-                    ),
-                  ],
-                ),
-              ],
+            BlocBuilder<GetPersonalDataCubit, GetPersonalDataState>(
+              builder: (context, state) {
+                if (state is GetPersonalDataLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is GetPersonalDataFailure) {
+                  return Text('Error', style: StyleManager.offWhite12Regular);
+                }
+                if (state is GetPersonalDataSuccess) {
+                  return Row(
+                    children: [
+                      state.personalInfoModel.imageUrl.isNotEmpty
+                          ? CircleAvatar(
+                            radius: 30.r,
+                            backgroundImage: NetworkImage(
+                              state.personalInfoModel.imageUrl,
+                            ),
+                            onBackgroundImageError:
+                                (_, __) => Icon(
+                                  Icons.error,
+                                  size: 40.w,
+                                  color: Colors.red,
+                                ),
+                          )
+                          : SvgPicture.asset(context.asset.profileImage!),
+
+                      SizedBox(width: 10.w),
+
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${state.personalInfoModel.firstName} ${state.personalInfoModel.lastName}',
+                            style: StyleManager.secondary14SemiBold(context),
+                          ),
+                          Text(
+                            state.personalInfoModel.phoneNumber,
+                            style: StyleManager.offWhite12Regular,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
             ),
+
             SizedBox(height: 20.h),
             BuildListTile(),
           ],

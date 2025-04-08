@@ -1,9 +1,9 @@
-import 'package:chateo/features/conversation/chats/ui/widgets/chat_item.dart';
+import 'package:chateo/core/common/widgets/custom_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/common/widgets/custom_text_field.dart';
-import 'story_item.dart';
+import '../../../core/common/widgets/custom_text_field.dart';
+import 'widgets/story_item.dart';
 
 class Chats extends StatefulWidget {
   const Chats({super.key});
@@ -47,7 +47,7 @@ class _ChatsState extends State<Chats> {
             child: ListView.separated(
               padding: EdgeInsets.only(bottom: 30.h),
               itemCount: 20,
-              itemBuilder: (context, index) => ChatItem(),
+              itemBuilder: (context, index) => CustomListItem(),
               separatorBuilder: (context, index) => SizedBox(height: 10.w),
             ),
           ),
