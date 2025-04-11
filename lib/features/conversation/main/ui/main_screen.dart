@@ -1,6 +1,6 @@
 import 'package:chateo/core/extensions/context_extension.dart';
 import 'package:chateo/core/utils/fonts/style_manager.dart';
-import 'package:chateo/features/conversation/chats/chats.dart';
+import 'package:chateo/features/conversation/chats/ui/chats.dart';
 import 'package:chateo/features/conversation/more/ui/more_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

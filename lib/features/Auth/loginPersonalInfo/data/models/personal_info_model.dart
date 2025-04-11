@@ -1,11 +1,13 @@
-class PersonalInfoModel {
-  int? id;
+import 'package:equatable/equatable.dart';
+
+class PersonalInfoModel extends Equatable {
+  final String? id;
   final String firstName;
   final String lastName;
   final String phoneNumber;
   final String imageUrl;
 
-  PersonalInfoModel({
+  const PersonalInfoModel({
     this.id,
     required this.phoneNumber,
     required this.firstName,
@@ -15,7 +17,7 @@ class PersonalInfoModel {
 
   factory PersonalInfoModel.fromJson(Map<String, dynamic> json) {
     return PersonalInfoModel(
-      id: json['id'] as int,
+      id: json['id'] as String,
       firstName: json['frist_name'] as String,
       lastName: json['last_name'] as String,
       phoneNumber: json['phone_number'] as String,
@@ -25,10 +27,13 @@ class PersonalInfoModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'frist_name': firstName,
-      'last_name': lastName,
-      'phone_number': phoneNumber,
-      'image_url': imageUrl,
+      'frist_name': firstName.trim(),
+      'last_name': lastName.trim(),
+      'phone_number': phoneNumber.trim(),
+      'image_url': imageUrl.trim(),
     };
   }
+
+  @override
+  List<Object?> get props => [id, firstName, lastName, phoneNumber, imageUrl];
 }
