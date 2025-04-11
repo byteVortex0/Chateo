@@ -4,14 +4,20 @@ import 'package:chateo/features/Auth/loginPersonalInfo/ui/login_profile_info.dar
 import 'package:chateo/features/Auth/loginVerificationOTP/ui/login_verification_otp.dart';
 import 'package:chateo/features/Auth/onboarding/ui/onboarding_screen.dart';
 import 'package:chateo/features/conversation/main/ui/main_screen.dart';
+import 'package:chateo/features/conversation/personalChat/logic/send_massage/send_massage_cubit.dart';
+import 'package:chateo/features/conversation/personalChat/logic/update_width/update_width_cubit.dart';
 import 'package:chateo/features/conversation/personalChat/ui/personal_chat.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/Auth/loginPersonalInfo/data/models/personal_info_model.dart';
 import '../../features/Auth/loginPersonalInfo/logic/add_personal_info/add_personal_info_cubit.dart';
 import '../../features/Auth/loginPersonalInfo/logic/upload_images/upload_images_cubit.dart';
+import '../../features/conversation/chats/logic/get_all_chats/get_all_chats_cubit.dart';
+import '../../features/conversation/contacts/logic/get_all_contacts/get_all_contacts_cubit.dart';
 import '../../features/conversation/main/logic/nav_bar/nav_bar_cubit.dart';
 import '../../features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
+import '../../features/conversation/personalChat/logic/get_all_messages/get_all_messages_cubit.dart';
 import '../di/injection.dart';
 
 class AppRoutes {
@@ -59,12 +65,36 @@ class AppRoutes {
                 create:
                     (context) => sl<GetPersonalDataCubit>()..getPersonalData(),
               ),
+
+              BlocProvider<GetAllContactsCubit>(
+                create:
+                    (context) => sl<GetAllContactsCubit>()..getAllContacts(),
+              ),
+
+              BlocProvider<GetAllChatsCubit>(
+                create: (context) => sl<GetAllChatsCubit>()..getAllChats(),
+              ),
             ],
             child: MainScreen(),
           ),
         );
       case personalChat:
-        return BaseRoutes(page: PersonalChat());
+        return BaseRoutes(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider<UpdateWidthCubit>(
+                create: (context) => sl<UpdateWidthCubit>(),
+              ),
+              BlocProvider<SendMassageCubit>(
+                create: (context) => sl<SendMassageCubit>(),
+              ),
+              BlocProvider<GetAllMessagesCubit>(
+                create: (context) => sl<GetAllMessagesCubit>(),
+              ),
+            ],
+            child: PersonalChat(user: args as PersonalInfoModel),
+          ),
+        );
       default:
         return null;
     }

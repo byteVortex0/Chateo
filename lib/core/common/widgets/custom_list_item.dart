@@ -6,33 +6,64 @@ import '../../utils/color_manager.dart';
 import '../../utils/fonts/style_manager.dart';
 
 class CustomListItem extends StatelessWidget {
-  const CustomListItem({super.key});
+  const CustomListItem({
+    super.key,
+    required this.name,
+    required this.imageUrl,
+    required this.phoneNumber,
+    required this.massage,
+    this.onPressed,
+  });
+
+  final String name;
+  final String imageUrl;
+  final String phoneNumber;
+  final String massage;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          //TODO: Hard code
-          height: 40.h,
-          width: 50.w,
-          decoration: BoxDecoration(
-            color: context.color.bgTextFieldColor,
-            borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: LightColorManager.hintTextField),
+    return InkWell(
+      onTap: onPressed,
+      child: Row(
+        children: [
+          Container(
+            //TODO: Hard code
+            height: 40.h,
+            width: 50.w,
+            decoration: BoxDecoration(
+              color: context.color.bgTextFieldColor,
+              borderRadius: BorderRadius.circular(10.r),
+              border: Border.all(color: LightColorManager.hintTextField),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.r),
+              child:
+                  imageUrl.isNotEmpty
+                      ? Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder:
+                            (context, error, stackTrace) =>
+                                const Icon(Icons.person),
+                      )
+                      : const Icon(Icons.person),
+            ),
           ),
-          child: Icon(Icons.add, color: LightColorManager.hintTextField),
-        ),
-        SizedBox(width: 7.w),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Name', style: StyleManager.neutral10Regular(context)),
-            SizedBox(width: 7.w),
-            Text('Massage', style: StyleManager.neutral10Regular(context)),
-          ],
-        ),
-      ],
+          SizedBox(width: 7.w),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(name, style: StyleManager.neutral10Regular(context)),
+              SizedBox(width: 7.w),
+              Text(
+                massage.isEmpty ? phoneNumber : massage,
+                style: StyleManager.neutral10Regular(context),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

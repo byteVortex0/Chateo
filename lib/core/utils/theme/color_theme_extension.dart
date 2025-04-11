@@ -9,6 +9,12 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
   final Color? bgTextFieldColor;
   final Color? hintTextFieldColor;
   final Color? resendCodeColor;
+  final Color? senderItemColor;
+  final Color? mySwiperMassageColor;
+  final Color? yourSwiperMassageColor;
+  final Color? yourSwiperContainerColor;
+  final Color? yourSwipernameColor;
+  final Color? yourSwipertextColor;
 
   const ColorThemeExtension({
     required this.brandColor,
@@ -18,6 +24,12 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     required this.bgTextFieldColor,
     required this.hintTextFieldColor,
     required this.resendCodeColor,
+    required this.senderItemColor,
+    required this.mySwiperMassageColor,
+    required this.yourSwiperMassageColor,
+    required this.yourSwiperContainerColor,
+    required this.yourSwipernameColor,
+    required this.yourSwipertextColor,
   });
 
   @override
@@ -29,6 +41,12 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     Color? bgTextFieldColor,
     Color? hintTextFieldColor,
     Color? resendCodeColor,
+    Color? senderItemColor,
+    Color? mySwiperMassageColor,
+    Color? yourSwiperMassageColor,
+    Color? yourSwiperContainerColor,
+    Color? yourSwipernameColor,
+    Color? yourSwipertextColor,
   }) {
     return ColorThemeExtension(
       brandColor: brandColor ?? this.brandColor,
@@ -38,6 +56,14 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
       hintTextFieldColor: hintTextFieldColor ?? this.hintTextFieldColor,
       resendCodeColor: resendCodeColor ?? this.resendCodeColor,
       thirdColor: thirdColor ?? this.thirdColor,
+      senderItemColor: senderItemColor ?? this.senderItemColor,
+      mySwiperMassageColor: mySwiperMassageColor ?? this.mySwiperMassageColor,
+      yourSwiperMassageColor:
+          yourSwiperMassageColor ?? this.yourSwiperMassageColor,
+      yourSwiperContainerColor:
+          yourSwiperContainerColor ?? this.yourSwiperContainerColor,
+      yourSwipernameColor: yourSwipernameColor ?? this.yourSwipernameColor,
+      yourSwipertextColor: yourSwipertextColor ?? this.yourSwipertextColor,
     );
   }
 
@@ -61,6 +87,32 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
         t,
       ),
       resendCodeColor: Color.lerp(resendCodeColor, other.resendCodeColor, t),
+      senderItemColor: Color.lerp(senderItemColor, other.senderItemColor, t),
+      mySwiperMassageColor: Color.lerp(
+        mySwiperMassageColor,
+        other.mySwiperMassageColor,
+        t,
+      ),
+      yourSwiperMassageColor: Color.lerp(
+        yourSwiperMassageColor,
+        other.yourSwiperMassageColor,
+        t,
+      ),
+      yourSwiperContainerColor: Color.lerp(
+        yourSwiperContainerColor,
+        other.yourSwiperContainerColor,
+        t,
+      ),
+      yourSwipernameColor: Color.lerp(
+        yourSwipernameColor,
+        other.yourSwipernameColor,
+        t,
+      ),
+      yourSwipertextColor: Color.lerp(
+        yourSwipertextColor,
+        other.yourSwipertextColor,
+        t,
+      ),
     );
   }
 
@@ -72,6 +124,12 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     bgTextFieldColor: LightColorManager.offWhite,
     hintTextFieldColor: LightColorManager.hintTextField,
     resendCodeColor: LightColorManager.brandColorLight,
+    senderItemColor: Colors.white,
+    mySwiperMassageColor: LightColorManager.mySwiperMassageLight,
+    yourSwiperMassageColor: LightColorManager.dividerColor,
+    yourSwiperContainerColor: LightColorManager.brandColorLight,
+    yourSwipernameColor: LightColorManager.brandColorLight,
+    yourSwipertextColor: LightColorManager.mySwipertextLight,
   );
 
   static const ColorThemeExtension dark = ColorThemeExtension(
@@ -82,5 +140,11 @@ class ColorThemeExtension extends ThemeExtension<ColorThemeExtension> {
     bgTextFieldColor: DarkColorManager.bgTextFieldDark,
     hintTextFieldColor: DarkColorManager.offWhiteDark,
     resendCodeColor: LightColorManager.offWhite,
+    senderItemColor: LightColorManager.neutralLight,
+    mySwiperMassageColor: DarkColorManager.mySwiperMassageDark,
+    yourSwiperMassageColor: DarkColorManager.bgTextFieldDark,
+    yourSwiperContainerColor: LightColorManager.offWhite,
+    yourSwipernameColor: LightColorManager.offWhite,
+    yourSwipertextColor: LightColorManager.offWhite,
   );
 }

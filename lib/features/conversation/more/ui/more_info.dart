@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/utils/fonts/style_manager.dart';
 import 'widgets/build_list_tile.dart';
+import '../../../../core/common/widgets/loading_shimmer.dart';
 
 class MoreInfo extends StatelessWidget {
   const MoreInfo({super.key});
@@ -21,7 +22,7 @@ class MoreInfo extends StatelessWidget {
             BlocBuilder<GetPersonalDataCubit, GetPersonalDataState>(
               builder: (context, state) {
                 if (state is GetPersonalDataLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const LoadingShimmer();
                 }
                 if (state is GetPersonalDataFailure) {
                   return Text('Error', style: StyleManager.offWhite12Regular);

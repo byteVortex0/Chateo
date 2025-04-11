@@ -25,25 +25,15 @@ class GetPersonalDataCubit extends Cubit<GetPersonalDataState> {
       final response =
           await supabase
               .from('users')
-              .select('frist_name, last_name, phone_number, image_url')
+              .select()
               .eq('id', userId)
               .limit(1)
               .maybeSingle();
 
-      log('User ID: $userId');
-      log('Response: $response');
-
       if (response != null) {
-        emit(
-          GetPersonalDataSuccess(
-            personalInfoModel: PersonalInfoModel(
-              firstName: response['frist_name'],
-              lastName: response['last_name'],
-              phoneNumber: response['phone_number'],
-              imageUrl: response['image_url'],
-            ),
-          ),
-        );
+        final data = PersonalInfoModel.fromJson(response);
+
+        emit(GetPersonalDataSuccess(personalInfoModel: data));
       } else {
         log('No data found');
         emit(GetPersonalDataFailure(error: 'No data found'));
