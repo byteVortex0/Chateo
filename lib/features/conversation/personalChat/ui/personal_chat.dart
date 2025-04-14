@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../Auth/loginPersonalInfo/data/models/personal_info_model.dart';
+import '../../chats/data/model/chat_model.dart';
 import 'widgets/app_bar_chat.dart';
 
 class PersonalChat extends StatelessWidget {
-  const PersonalChat({super.key, required this.user});
+  const PersonalChat({super.key, required this.user, this.chat});
 
   final PersonalInfoModel user;
+  final ChatModel? chat;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class PersonalChat extends StatelessWidget {
         child: Column(
           children: [
             //* Show Massages in List View
-            ShowMassages(),
+            ShowMassages(chat: chat, user: user),
             SizedBox(height: 10.h),
             //* Enter Message
             EnterMessage(user: user),

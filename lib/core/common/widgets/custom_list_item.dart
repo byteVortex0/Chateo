@@ -12,6 +12,7 @@ class CustomListItem extends StatelessWidget {
     required this.imageUrl,
     required this.phoneNumber,
     required this.massage,
+    this.timeMassage,
     this.onPressed,
   });
 
@@ -19,6 +20,7 @@ class CustomListItem extends StatelessWidget {
   final String imageUrl;
   final String phoneNumber;
   final String massage;
+  final String? timeMassage;
   final Function()? onPressed;
 
   @override
@@ -51,17 +53,32 @@ class CustomListItem extends StatelessWidget {
             ),
           ),
           SizedBox(width: 7.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name, style: StyleManager.neutral10Regular(context)),
-              SizedBox(width: 7.w),
-              Text(
-                massage.isEmpty ? phoneNumber : massage,
-                style: StyleManager.neutral10Regular(context),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: StyleManager.neutral10Regular(
+                    context,
+                  ).copyWith(fontSize: 14.sp),
+                ),
+                SizedBox(width: 7.w),
+                Text(
+                  massage.isEmpty ? phoneNumber : massage,
+                  style: StyleManager.neutral10Regular(context),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
+          timeMassage != null
+              ? Text(
+                timeMassage!,
+                style: StyleManager.neutral10Regular(context),
+              )
+              : const SizedBox.shrink(),
         ],
       ),
     );

@@ -1,11 +1,9 @@
-import 'package:chateo/core/common/widgets/custom_list_item.dart';
-import 'package:chateo/features/conversation/chats/logic/get_all_chats/get_all_chats_cubit.dart';
+import 'package:chateo/features/conversation/chats/ui/widgets/chats_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/common/widgets/custom_text_field.dart';
-import '../../../../core/common/widgets/loading_shimmer.dart';
 import '../../../../core/utils/color_manager.dart';
 import 'widgets/story_item.dart';
 
@@ -56,50 +54,7 @@ class _ChatsState extends State<Chats> {
             padding: EdgeInsets.zero,
           ),
           SizedBox(height: 10.h),
-          Expanded(
-            child: BlocBuilder<GetAllChatsCubit, GetAllChatsState>(
-              builder: (context, state) {
-                if (state is GetAllChatsLoading) {
-                  return ListView.separated(
-                    padding: EdgeInsets.only(bottom: 30.h),
-                    itemCount: 10,
-                    itemBuilder: (context, index) => const LoadingShimmer(),
-                    separatorBuilder:
-                        (context, index) => SizedBox(height: 10.w),
-                  );
-                }
-                if (state is GetAllChatsSuccess) {
-                  return ListView.separated(
-                    padding: EdgeInsets.only(bottom: 30.h),
-                    itemCount: state.chats.length,
-                    itemBuilder:
-                        (context, index) => CustomListItem(
-                          name: 'Name',
-                          imageUrl: 'https://example.com/image.jpg',
-                          phoneNumber: '1234567890',
-                          massage: state.chats[index].lastMessage,
-                        ),
-                    separatorBuilder:
-                        (context, index) => SizedBox(height: 10.w),
-                  );
-                }
-                if (state is GetAllChatsFailure) {
-                  return Center(
-                    child: Text(
-                      'Faild to load Chats',
-                      style: TextStyle(fontSize: 20.sp),
-                    ),
-                  );
-                }
-                if (state is GetAllChatsEmpty) {
-                  return Center(
-                    child: Text('No Chats', style: TextStyle(fontSize: 20.sp)),
-                  );
-                }
-                return Container();
-              },
-            ),
-          ),
+          ChatsList(),
         ],
       ),
     );

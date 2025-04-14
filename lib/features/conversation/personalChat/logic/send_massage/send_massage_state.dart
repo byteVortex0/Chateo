@@ -12,9 +12,10 @@ final class SendMassageInitial extends SendMassageState {}
 final class SendMassageLoading extends SendMassageState {}
 
 final class SendMassageSuccess extends SendMassageState {
-  const SendMassageSuccess({required this.chat});
+  const SendMassageSuccess({required this.chat, required this.chatId});
 
   final ChatModel chat;
+  final String chatId;
 
   @override
   List<Object> get props => [chat];

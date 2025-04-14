@@ -37,6 +37,7 @@ class _EnterMessageState extends State<EnterMessage> {
               controller: _messageController,
               margin: EdgeInsets.symmetric(horizontal: 2.w),
               padding: EdgeInsets.symmetric(horizontal: 5.w),
+              maxLines: 4,
             ),
           ),
           SizedBox(width: 10.w),
@@ -53,7 +54,7 @@ class _EnterMessageState extends State<EnterMessage> {
                           senderId: userId,
                           content: _messageController.text,
                           sendAt: DateTime.now(),
-                          isSeen: true,
+                          isSeen: false,
                           swipperMessageId: '',
                         ),
                       ],
@@ -61,6 +62,7 @@ class _EnterMessageState extends State<EnterMessage> {
                       lastMessage: _messageController.text,
                     ),
                   );
+                  _messageController.clear();
                   log('send');
                 },
                 icon: Icon(Icons.send, color: context.color.brandColor),

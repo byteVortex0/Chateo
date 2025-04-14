@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.margin,
     this.padding,
+    this.maxLines,
   });
 
   final String hint;
@@ -23,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,8 @@ class CustomTextFormField extends StatelessWidget {
               return null;
             },
         onChanged: onChanged,
+        maxLines: maxLines,
+        minLines: 1,
       ),
     );
   }

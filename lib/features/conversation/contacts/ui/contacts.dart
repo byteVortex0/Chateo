@@ -73,7 +73,7 @@ class Contacts extends StatelessWidget {
                             onPressed: () {
                               context.pushNamed(
                                 AppRoutes.personalChat,
-                                arguments: contacts[index],
+                                arguments: {'user': contacts[index]},
                               );
                             },
                           ),
