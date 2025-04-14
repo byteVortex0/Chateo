@@ -11,11 +11,13 @@ class MassageOneLine extends StatelessWidget {
     required this.massage,
     required this.isMe,
     required this.time,
+    required this.isSeen,
   });
 
   final String massage;
   final bool isMe;
   final String time;
+  final bool isSeen;
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +41,16 @@ class MassageOneLine extends StatelessWidget {
               fontWeight: FontWeightHelper.semiBold,
             ),
           ),
-
-          TextSpan(
-            text: ' . Read',
-            style: TextStyle(
-              color: isMe ? Colors.white : LightColorManager.hintTextField,
-              fontSize: 10.sp,
-              fontWeight: FontWeightHelper.semiBold,
-            ),
-          ),
+          isSeen
+              ? TextSpan(
+                text: ' . Read',
+                style: TextStyle(
+                  color: isMe ? Colors.white : LightColorManager.hintTextField,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeightHelper.semiBold,
+                ),
+              )
+              : TextSpan(),
         ],
       ),
     );

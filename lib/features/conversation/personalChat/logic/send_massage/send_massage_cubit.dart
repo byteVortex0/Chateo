@@ -19,10 +19,12 @@ class SendMassageCubit extends Cubit<SendMassageState> {
           await supabase
               .from('chats')
               .select('id, users')
-              .contains('users', {
-                'user1_id': chat.users.user1Id,
-                'user2_id': chat.users.user2Id,
-              })
+              .or(
+                'users->>user1_id.eq.${chat.users.user1Id},users->>user2_id.eq.${chat.users.user1Id}',
+              )
+              .or(
+                'users->>user1_id.eq.${chat.users.user2Id},users->>user2_id.eq.${chat.users.user2Id}',
+              )
               .limit(1)
               .maybeSingle();
 
@@ -34,7 +36,7 @@ class SendMassageCubit extends Cubit<SendMassageState> {
 
         log('Add Response: $addResponse');
 
-        emit(SendMassageSuccess(chat: chat));
+        emit(SendMassageSuccess(chat: chat, chatId: addResponse[0]['id']));
       } else {
         final updateResponse = await supabase.rpc(
           'add_chat_message',
@@ -51,7 +53,7 @@ class SendMassageCubit extends Cubit<SendMassageState> {
         if (updateResponse == null) {
           emit(SendMassageError('Failed to send message'));
         } else {
-          emit(SendMassageSuccess(chat: chat));
+          emit(SendMassageSuccess(chat: chat, chatId: response['id']));
         }
       }
     } catch (e) {

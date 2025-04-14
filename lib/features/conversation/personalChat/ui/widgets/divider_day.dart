@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/utils/color_manager.dart';
 
 class DividerDay extends StatelessWidget {
-  const DividerDay({super.key});
+  const DividerDay({super.key, required this.time});
+
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class DividerDay extends StatelessWidget {
           ),
           SizedBox(width: 2.w),
           Text(
-            'Today',
+            time,
             style: TextStyle(
               color: context.color.hintTextFieldColor,
               fontSize: 12.sp,

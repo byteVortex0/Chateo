@@ -11,11 +11,13 @@ class MassageTwoLine extends StatelessWidget {
     required this.massage,
     required this.isMe,
     required this.time,
+    required this.isSeen,
   });
 
   final String massage;
   final bool isMe;
   final String time;
+  final bool isSeen;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class MassageTwoLine extends StatelessWidget {
         ),
         SizedBox(height: 5.h),
         Text(
-          isMe ? '$time . Read' : time,
+          isSeen ? '$time . Read' : time,
           style: TextStyle(
             color: isMe ? Colors.white : LightColorManager.hintTextField,
             fontSize: 10.sp,

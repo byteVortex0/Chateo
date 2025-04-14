@@ -13,11 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/Auth/loginPersonalInfo/data/models/personal_info_model.dart';
 import '../../features/Auth/loginPersonalInfo/logic/add_personal_info/add_personal_info_cubit.dart';
 import '../../features/Auth/loginPersonalInfo/logic/upload_images/upload_images_cubit.dart';
-import '../../features/conversation/chats/logic/get_all_chats/get_all_chats_cubit.dart';
+import '../../features/conversation/chats/data/model/chat_model.dart';
 import '../../features/conversation/contacts/logic/get_all_contacts/get_all_contacts_cubit.dart';
 import '../../features/conversation/main/logic/nav_bar/nav_bar_cubit.dart';
 import '../../features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
-import '../../features/conversation/personalChat/logic/get_all_messages/get_all_messages_cubit.dart';
 import '../di/injection.dart';
 
 class AppRoutes {
@@ -70,15 +69,14 @@ class AppRoutes {
                 create:
                     (context) => sl<GetAllContactsCubit>()..getAllContacts(),
               ),
-
-              BlocProvider<GetAllChatsCubit>(
-                create: (context) => sl<GetAllChatsCubit>()..getAllChats(),
-              ),
             ],
             child: MainScreen(),
           ),
         );
       case personalChat:
+        final map = args as Map<String, dynamic>;
+        final user = map['user'] as PersonalInfoModel;
+        final chat = map['chat'] as ChatModel?;
         return BaseRoutes(
           page: MultiBlocProvider(
             providers: [
@@ -88,11 +86,8 @@ class AppRoutes {
               BlocProvider<SendMassageCubit>(
                 create: (context) => sl<SendMassageCubit>(),
               ),
-              BlocProvider<GetAllMessagesCubit>(
-                create: (context) => sl<GetAllMessagesCubit>(),
-              ),
             ],
-            child: PersonalChat(user: args as PersonalInfoModel),
+            child: PersonalChat(user: user, chat: chat),
           ),
         );
       default:
