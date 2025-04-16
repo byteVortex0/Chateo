@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:chateo/core/service/shared_pref/pref_key.dart';
 import 'package:chateo/features/Auth/loginPersonalInfo/data/models/personal_info_model.dart';
@@ -22,6 +24,8 @@ class GetAllContactsCubit extends Cubit<GetAllContactsState> {
 
       response.removeWhere((element) => element['id'] == userId);
 
+      // log('response: $response');
+
       if (response.isEmpty) {
         emit(GetAllContactsEmpty());
         return;
@@ -29,6 +33,7 @@ class GetAllContactsCubit extends Cubit<GetAllContactsState> {
       final data = response.map((e) => PersonalInfoModel.fromJson(e)).toList();
       emit(GetAllContactsSuccess(contacts: data));
     } catch (e) {
+      log('Error fetching contacts: $e');
       emit(GetAllContactsError(e.toString()));
     }
   }

@@ -1,12 +1,24 @@
 import 'package:chateo/core/extensions/context_extension.dart';
+import 'package:chateo/core/service/shared_pref/pref_key.dart';
+import 'package:chateo/core/service/shared_pref/shared_pref.dart';
 import 'package:chateo/core/utils/fonts/font_weight_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../Auth/loginPersonalInfo/data/models/personal_info_model.dart';
+import '../../../chats/data/model/chat_model.dart';
+
 class SwiperMassage extends StatelessWidget {
-  const SwiperMassage({super.key, required this.isMe});
+  const SwiperMassage({
+    super.key,
+    required this.isMe,
+    required this.chatData,
+    required this.user,
+  });
 
   final bool isMe;
+  final ChatData chatData;
+  final PersonalInfoModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +55,9 @@ class SwiperMassage extends StatelessWidget {
               isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
-              'You',
+              SharedPref.getValue(PrefKey.userId) == chatData.senderId
+                  ? 'You'
+                  : '${user.firstName} ${user.lastName}',
               style: TextStyle(
                 color: isMe ? Colors.white : context.color.yourSwipernameColor,
                 fontSize: 12.sp,
@@ -52,7 +66,7 @@ class SwiperMassage extends StatelessWidget {
             ),
             SizedBox(height: 5.h),
             Text(
-              'Helooo',
+              chatData.content!,
               style: TextStyle(
                 color: isMe ? Colors.white : context.color.yourSwipertextColor,
                 fontSize: 14.sp,

@@ -62,3 +62,27 @@ class SendMassageCubit extends Cubit<SendMassageState> {
     }
   }
 }
+
+
+//* rpc for supabase
+// CREATE OR REPLACE FUNCTION add_chat_message(
+//   p_chat_id UUID,
+//   p_message JSONB,
+//   p_last_message TEXT,
+//   p_last_message_time TIMESTAMP
+// )
+// RETURNS TEXT
+// LANGUAGE plpgsql
+// AS $$
+// BEGIN
+//   UPDATE chats
+//   SET
+//     chat_data = chat_data || p_message,
+//     last_message = p_last_message,
+//     last_message_time = p_last_message_time
+//   WHERE id = p_chat_id;
+
+//   RETURN 'ok';
+// END;
+// $$;
+

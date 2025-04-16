@@ -53,33 +53,16 @@ class ChatsList extends StatelessWidget {
             itemBuilder: (context, index) {
               final chat = chats[index]['chat'];
               final personalInfo = chats[index]['personalInfo'];
+              final unRead = chats[index]['unread'];
 
-              // final personalInfo = PersonalInfoModel(
-              //   id: '959acdfd-528e-4fc9-a3ae-d3a9808b086b',
-              //   firstName: 'Mahmoud',
-              //   lastName: 'Ahmed',
-              //   imageUrl:
-              //       'https://ocebphmquteghqmnphiq.supabase.co/storage/v1/object/public/images/images/1743927508595.jpg',
-              //   phoneNumber: '01023456789',
-              // );
-
-              final now = DateTime.now();
-              final String time;
-              if ((chat.lastMessageTime as DateTime).formattedDate ==
-                  now.formattedDate) {
-                time = (chat.lastMessageTime as DateTime).formattedTime;
-              } else if ((chat.lastMessageTime as DateTime).formattedDate ==
-                  DateTime(now.year, now.month, now.day - 1).formattedDate) {
-                time = 'Yesterday';
-              } else {
-                time = (chat.lastMessageTime as DateTime).formattedDate;
-              }
               return CustomListItem(
                 name: '${personalInfo.firstName} ${personalInfo.lastName}',
                 imageUrl: personalInfo.imageUrl,
                 phoneNumber: personalInfo.phoneNumber,
                 massage: chat.lastMessage,
-                timeMassage: time,
+                timeMassage:
+                    (chat.lastMessageTime as DateTime).timeOrDateofMessage,
+                messagesNotRead: unRead[index],
                 onPressed: () {
                   context.pushNamed(
                     AppRoutes.personalChat,
