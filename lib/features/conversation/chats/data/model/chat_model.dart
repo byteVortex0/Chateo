@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatModel extends Equatable {
   const ChatModel({
@@ -65,6 +66,8 @@ class Users {
   }
 }
 
+final uuid = Uuid();
+
 class ChatData {
   final String? messageId;
   final String? senderId;
@@ -95,6 +98,7 @@ class ChatData {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': uuid.v4(),
       'sender_id': senderId,
       'content': content,
       'send_at': sendAt.toIso8601String(),

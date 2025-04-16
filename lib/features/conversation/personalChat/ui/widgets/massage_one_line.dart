@@ -53,6 +53,7 @@ class MassageOneLine extends StatelessWidget {
               : TextSpan(),
         ],
       ),
+      maxLines: 1,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:chateo/core/extensions/date_extension.dart';
 import 'package:chateo/features/conversation/personalChat/logic/controller/stream_messages.dart';
 import 'package:chateo/features/conversation/personalChat/logic/send_massage/send_massage_cubit.dart';
 import 'package:chateo/features/conversation/personalChat/ui/widgets/item_chat.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,11 +78,10 @@ class _ShowMassagesState extends State<ShowMassages> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 100), () {
         if (_scrollController.hasClients) {
-          _scrollController.jumpTo(
-            _scrollController.position.maxScrollExtent +
-                (_scrollController.position.viewportDimension * 0.2),
-            // duration: const Duration(milliseconds: 500),
-            // curve: Curves.easeInOut,
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
           );
         }
       });
@@ -196,11 +196,20 @@ class _ShowMassagesState extends State<ShowMassages> {
                   }
                 }
 
+                ChatData? swiperMessage;
+                if (messages[index].swipperMessageId != null) {
+                  swiperMessage = messages.firstWhereOrNull(
+                    (msg) => msg.messageId == messages[index].swipperMessageId,
+                  );
+                }
+
                 return ItemChat(
                   isMe: isMe,
                   chatData: messages[index],
                   index: index,
                   showDivider: showDivider,
+                  swiperMessage: swiperMessage,
+                  user: widget.user,
                 );
               },
               separatorBuilder: (context, index) => SizedBox(height: 10.h),

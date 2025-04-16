@@ -5,7 +5,6 @@ import 'package:chateo/features/Auth/loginVerificationOTP/ui/login_verification_
 import 'package:chateo/features/Auth/onboarding/ui/onboarding_screen.dart';
 import 'package:chateo/features/conversation/main/ui/main_screen.dart';
 import 'package:chateo/features/conversation/personalChat/logic/send_massage/send_massage_cubit.dart';
-import 'package:chateo/features/conversation/personalChat/logic/update_width/update_width_cubit.dart';
 import 'package:chateo/features/conversation/personalChat/ui/personal_chat.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +16,7 @@ import '../../features/conversation/chats/data/model/chat_model.dart';
 import '../../features/conversation/contacts/logic/get_all_contacts/get_all_contacts_cubit.dart';
 import '../../features/conversation/main/logic/nav_bar/nav_bar_cubit.dart';
 import '../../features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
+import '../../features/conversation/personalChat/logic/swipe_massege/swipe_massege_cubit.dart';
 import '../di/injection.dart';
 
 class AppRoutes {
@@ -80,11 +80,11 @@ class AppRoutes {
         return BaseRoutes(
           page: MultiBlocProvider(
             providers: [
-              BlocProvider<UpdateWidthCubit>(
-                create: (context) => sl<UpdateWidthCubit>(),
-              ),
               BlocProvider<SendMassageCubit>(
                 create: (context) => sl<SendMassageCubit>(),
+              ),
+              BlocProvider<SwipeMassegeCubit>(
+                create: (context) => sl<SwipeMassegeCubit>(),
               ),
             ],
             child: PersonalChat(user: user, chat: chat),

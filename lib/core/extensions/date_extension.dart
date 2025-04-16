@@ -32,4 +32,22 @@ extension DateExtension on DateTime {
       return DateFormat('yyyy-MM-dd').format(this);
     }
   }
+
+  String get timeOrDateofMessage {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final date = DateTime(year, month, day);
+    final diff = today.difference(date).inDays;
+
+    if (diff == 0) {
+      // today
+      return DateFormat('hh:mm a').format(this);
+    } else if (diff == 1) {
+      // yesterday
+      return 'Yesterday';
+    } else {
+      // other date
+      return DateFormat('yyyy-MM-dd').format(this);
+    }
+  }
 }

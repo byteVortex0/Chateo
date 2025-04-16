@@ -13,6 +13,7 @@ class CustomListItem extends StatelessWidget {
     required this.phoneNumber,
     required this.massage,
     this.timeMassage,
+    this.messagesNotRead,
     this.onPressed,
   });
 
@@ -21,6 +22,7 @@ class CustomListItem extends StatelessWidget {
   final String phoneNumber;
   final String massage;
   final String? timeMassage;
+  final int? messagesNotRead;
   final Function()? onPressed;
 
   @override
@@ -73,12 +75,31 @@ class CustomListItem extends StatelessWidget {
               ],
             ),
           ),
-          timeMassage != null
-              ? Text(
-                timeMassage!,
-                style: StyleManager.neutral10Regular(context),
-              )
-              : const SizedBox.shrink(),
+          Column(
+            children: [
+              messagesNotRead != null && messagesNotRead! > 0
+                  ? CircleAvatar(
+                    radius: 10.r,
+                    backgroundColor: Colors.green,
+                    child: Text(
+                      messagesNotRead.toString(),
+                      style: StyleManager.black14SemiBold(
+                        context,
+                      ).copyWith(fontSize: 10.sp, color: Colors.white),
+                    ),
+                  )
+                  : const SizedBox.shrink(),
+
+              SizedBox(height: 5.h),
+
+              timeMassage != null
+                  ? Text(
+                    timeMassage!,
+                    style: StyleManager.neutral10Regular(context),
+                  )
+                  : const SizedBox.shrink(),
+            ],
+          ),
         ],
       ),
     );
