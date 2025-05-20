@@ -10,7 +10,9 @@ import '../../../../../core/utils/fonts/style_manager.dart';
 import '../../logic/controller/get_all_chats_controller.dart';
 
 class ChatsList extends StatelessWidget {
-  const ChatsList({super.key});
+  const ChatsList({super.key, required this.searchText});
+
+  final String? searchText;
 
   @override
   Widget build(BuildContext context) {
@@ -45,15 +47,26 @@ class ChatsList extends StatelessWidget {
             );
           }
 
-          final chats = snapshot.data!;
+          final allChats = snapshot.data!;
+
+          final filteredChats =
+              searchText == null && searchText!.isEmpty
+                  ? allChats
+                  : allChats.where((chat) {
+                    final personalInfo = chat['personalInfo'];
+                    final fullName =
+                        '${personalInfo.firstName} ${personalInfo.lastName}'
+                            .toLowerCase();
+                    return fullName.contains(searchText!);
+                  }).toList();
 
           return ListView.separated(
             padding: EdgeInsets.only(bottom: 30.h),
-            itemCount: chats.length,
+            itemCount: filteredChats.length,
             itemBuilder: (context, index) {
-              final chat = chats[index]['chat'];
-              final personalInfo = chats[index]['personalInfo'];
-              final unRead = chats[index]['unread'];
+              final chat = filteredChats[index]['chat'];
+              final personalInfo = filteredChats[index]['personalInfo'];
+              final unRead = filteredChats[index]['unread'];
 
               return CustomListItem(
                 name: '${personalInfo.firstName} ${personalInfo.lastName}',

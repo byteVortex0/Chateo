@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'core/di/injection.dart';
+import 'core/service/push_notification/firebase_cloud_messaging.dart';
+import 'core/service/push_notification/local_notification.dart';
 import 'core/service/shared_pref/shared_pref.dart';
 import 'firebase_options.dart';
 
@@ -14,7 +16,12 @@ void main() async {
 
   await ScreenUtil.ensureScreenSize();
   await EnvVariables().init();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ).whenComplete(() async {
+    await FirebaseCloudMessaging().init();
+    await LocalNotification.init();
+  });
 
   await Supabase.initialize(
     url: EnvVariables().supabaseUrl,

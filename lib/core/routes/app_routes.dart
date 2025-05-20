@@ -13,6 +13,9 @@ import '../../features/Auth/loginPersonalInfo/data/models/personal_info_model.da
 import '../../features/Auth/loginPersonalInfo/logic/add_personal_info/add_personal_info_cubit.dart';
 import '../../features/Auth/loginPersonalInfo/logic/upload_images/upload_images_cubit.dart';
 import '../../features/conversation/chats/data/model/chat_model.dart';
+import '../../features/conversation/add_story/logic/add_story/add_story_cubit.dart';
+import '../../features/conversation/add_story/ui/screens/add_story_screen.dart';
+import '../../features/conversation/view_story/ui/screens/view_story_screen.dart';
 import '../../features/conversation/contacts/logic/get_all_contacts/get_all_contacts_cubit.dart';
 import '../../features/conversation/main/logic/nav_bar/nav_bar_cubit.dart';
 import '../../features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
@@ -26,6 +29,8 @@ class AppRoutes {
   static const String loginProfileInfo = 'loginProfileInfo';
   static const String mainScreen = 'mainScreen';
   static const String personalChat = 'personalChat';
+  static const String addStoryScreen = 'addStoryScreen';
+  static const String viewStoryScreen = 'viewStoryScreen';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -42,6 +47,9 @@ class AppRoutes {
           ),
         );
       case loginProfileInfo:
+        final map = args as Map<String, dynamic>;
+        final token = map['token'] as String;
+        final phoneNumber = map['phoneNumber'] as String;
         return BaseRoutes(
           page: MultiBlocProvider(
             providers: [
@@ -52,7 +60,7 @@ class AppRoutes {
                 create: (context) => sl<UploadImagesCubit>(),
               ),
             ],
-            child: LoginProfileInfo(phoneNumber: args as String),
+            child: LoginProfileInfo(phoneNumber: phoneNumber, token: token),
           ),
         );
       case mainScreen:
@@ -89,6 +97,28 @@ class AppRoutes {
             ],
             child: PersonalChat(user: user, chat: chat),
           ),
+        );
+      case addStoryScreen:
+        return BaseRoutes(
+          page: MultiBlocProvider(
+            providers: [
+              BlocProvider<AddStoryCubit>(
+                create: (context) => sl<AddStoryCubit>(),
+              ),
+              BlocProvider<UploadImagesCubit>(
+                create: (context) => sl<UploadImagesCubit>(),
+              ),
+            ],
+            child: AddStoryScreen(),
+          ),
+        );
+      case viewStoryScreen:
+        final map = args as Map<String, dynamic>;
+        final allStories = map['allStories'] as List<Map<String, dynamic>>;
+        final index = map['index'] as int;
+
+        return BaseRoutes(
+          page: ViewStoryScreen(allStories: allStories, index: index),
         );
       default:
         return null;

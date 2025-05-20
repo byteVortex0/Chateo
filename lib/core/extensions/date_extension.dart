@@ -50,4 +50,32 @@ extension DateExtension on DateTime {
       return DateFormat('yyyy-MM-dd').format(this);
     }
   }
+
+  String get toReadableTime {
+    final now = DateTime.now();
+    final difference = now.difference(this);
+
+    if (difference.inSeconds < 60) {
+      return 'Just now';
+    } else if (difference.inMinutes == 1) {
+      return '1 minute ago';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours == 1) {
+      return '1 hour ago';
+    } else if (difference.inHours <= 2) {
+      return '${difference.inHours} hours ago';
+    } else if (_isYesterday(this, now)) {
+      return 'Yesterday at ${DateFormat('hh:mm a').format(this)}';
+    } else {
+      return DateFormat('hh:mm a').format(this);
+    }
+  }
+
+  static bool _isYesterday(DateTime date, DateTime now) {
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+    return date.year == yesterday.year &&
+        date.month == yesterday.month &&
+        date.day == yesterday.day;
+  }
 }

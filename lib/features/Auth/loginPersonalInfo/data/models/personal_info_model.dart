@@ -6,6 +6,7 @@ class PersonalInfoModel extends Equatable {
   final String lastName;
   final String phoneNumber;
   final String imageUrl;
+  final String? token;
 
   const PersonalInfoModel({
     this.id,
@@ -13,6 +14,7 @@ class PersonalInfoModel extends Equatable {
     required this.firstName,
     required this.lastName,
     required this.imageUrl,
+    this.token,
   });
 
   factory PersonalInfoModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class PersonalInfoModel extends Equatable {
       lastName: json['last_name'] as String,
       phoneNumber: json['phone_number'] as String,
       imageUrl: json['image_url'] as String,
+      token: json['token'] as String?,
     );
   }
 
@@ -31,6 +34,7 @@ class PersonalInfoModel extends Equatable {
       'last_name': lastName.trim(),
       'phone_number': phoneNumber.trim(),
       'image_url': imageUrl.trim(),
+      'token': token?.trim() ?? '',
     };
   }
 

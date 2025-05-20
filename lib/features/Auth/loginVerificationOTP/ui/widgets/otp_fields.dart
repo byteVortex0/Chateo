@@ -82,7 +82,10 @@ class _OTPFieldsState extends State<OTPFields> {
           ).showSnackBar(SnackBar(content: Text('Verified successfully')));
           context.pushNamedAndRemoveUntil(
             AppRoutes.loginProfileInfo,
-            arguments: widget.phoneNumber,
+            arguments: {
+              'token': state.token,
+              'phoneNumber': widget.phoneNumber,
+            },
           );
         } else if (state is VerifyOtpFailed) {
           ScaffoldMessenger.of(

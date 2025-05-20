@@ -16,9 +16,14 @@ import '../../../../core/service/shared_pref/pref_key.dart';
 import '../data/models/personal_info_model.dart';
 
 class LoginProfileInfo extends StatefulWidget {
-  const LoginProfileInfo({super.key, required this.phoneNumber});
+  const LoginProfileInfo({
+    super.key,
+    required this.phoneNumber,
+    required this.token,
+  });
 
   final String phoneNumber;
+  final String token;
 
   @override
   State<LoginProfileInfo> createState() => _LoginProfileInfoState();
@@ -128,6 +133,7 @@ class _LoginProfileInfoState extends State<LoginProfileInfo> {
                                     firstName: firstNameController.text,
                                     lastName: lastNameController.text,
                                     imageUrl: selectImage!,
+                                    token: widget.token,
                                   ),
                                 );
                           }

@@ -41,35 +41,35 @@ class _ItemChatState extends State<ItemChat> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: widget.isMe ? TextDirection.rtl : TextDirection.ltr,
-      child: GestureDetector(
-        onHorizontalDragUpdate: (details) {
-          setState(() {
-            _dragOffset += details.delta.dx;
-            if (_dragOffset < 0) _dragOffset = 0;
-          });
-        },
-        onHorizontalDragEnd: (details) {
-          if (_dragOffset > 100) {
-            context.read<SwipeMassegeCubit>().onSwipe(
-              chatData: widget.chatData,
-            );
-          }
-          setState(() {
-            _dragOffset = 0;
-          });
-        },
-        child: Transform.translate(
-          offset: Offset(_dragOffset, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //* show divider
-              widget.showDivider
-                  ? DividerDay(time: widget.chatData.sendAt.dateOfDivider)
-                  : const SizedBox.shrink(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //* show divider
+          widget.showDivider
+              ? DividerDay(time: widget.chatData.sendAt.dateOfDivider)
+              : const SizedBox.shrink(),
 
-              //* message
-              IntrinsicWidth(
+          //* message
+          IntrinsicWidth(
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                setState(() {
+                  _dragOffset += details.delta.dx;
+                  if (_dragOffset < 0) _dragOffset = 0;
+                });
+              },
+              onHorizontalDragEnd: (details) {
+                if (_dragOffset > 100) {
+                  context.read<SwipeMassegeCubit>().onSwipe(
+                    chatData: widget.chatData,
+                  );
+                }
+                setState(() {
+                  _dragOffset = 0;
+                });
+              },
+              child: Transform.translate(
+                offset: Offset(_dragOffset, 0),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                   margin:
@@ -123,9 +123,9 @@ class _ItemChatState extends State<ItemChat> {
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
