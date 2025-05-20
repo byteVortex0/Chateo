@@ -76,6 +76,7 @@ class _ShowMassagesState extends State<ShowMassages> {
 
   void scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Add a slight delay to ensure the layout is complete
       Future.delayed(const Duration(milliseconds: 100), () {
         if (_scrollController.hasClients) {
           _scrollController.animateTo(
@@ -83,6 +84,10 @@ class _ShowMassagesState extends State<ShowMassages> {
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
+          // log('offset: ${_scrollController.offset}');
+          // log('maxScrollExtent: ${_scrollController.position.maxScrollExtent}');
+        } else {
+          log('ScrollController has no clients');
         }
       });
     });
@@ -176,6 +181,7 @@ class _ShowMassagesState extends State<ShowMassages> {
 
         return Expanded(
           child: Container(
+            height: double.infinity,
             color: context.color.bgTextFieldColor,
             child: ListView.separated(
               controller: _scrollController,

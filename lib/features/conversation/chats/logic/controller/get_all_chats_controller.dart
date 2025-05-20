@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../core/service/shared_pref/pref_key.dart';
@@ -13,7 +11,7 @@ class GetAllChatsController {
 
   Stream<List<Map<String, dynamic>>> getAllChats() {
     final userId = SharedPref.getValue(PrefKey.userId);
-    log('userId from stream: $userId');
+    // log('userId from stream: $userId');
     return supabase
         .from('chats')
         .stream(primaryKey: ['id'])

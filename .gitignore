@@ -34,6 +34,7 @@ migrate_working_dir/
 /build/
 lib/core/service/firebase/firebase_authentication.dart
 .env.dev
+tes
 
 # Symbolication related
 app.*.symbols

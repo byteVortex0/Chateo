@@ -3,9 +3,11 @@ import 'package:chateo/features/Auth/loginPersonalInfo/logic/add_personal_info/a
 import 'package:chateo/features/Auth/loginPersonalInfo/logic/upload_images/upload_images_cubit.dart';
 import 'package:chateo/features/Auth/loginVerificationOTP/logic/verify_otp/verify_otp_cubit.dart';
 import 'package:chateo/features/conversation/more/logic/get_personal_data/get_personal_data_cubit.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../features/Auth/loginByPhone/logic/login_by_phone/login_by_phone_cubit.dart';
+import '../../features/conversation/add_story/logic/add_story/add_story_cubit.dart';
 import '../../features/conversation/contacts/logic/get_all_contacts/get_all_contacts_cubit.dart';
 import '../../features/conversation/main/logic/nav_bar/nav_bar_cubit.dart';
 import '../../features/conversation/personalChat/logic/send_massage/send_massage_cubit.dart';
@@ -21,7 +23,11 @@ Future<void> setupInjection() async {
 }
 
 Future<void> _initCore() async {
-  sl.registerFactory<ThemeCubit>(ThemeCubit.new);
+  final navigationKey = GlobalKey<NavigatorState>();
+
+  sl
+    ..registerFactory<ThemeCubit>(ThemeCubit.new)
+    ..registerSingleton<GlobalKey<NavigatorState>>(navigationKey);
 }
 
 Future<void> _loginByPhone() async {
@@ -40,5 +46,6 @@ Future<void> _initConversation() async {
     ..registerFactory<GetPersonalDataCubit>(GetPersonalDataCubit.new)
     ..registerFactory<GetAllContactsCubit>(GetAllContactsCubit.new)
     ..registerFactory<SendMassageCubit>(SendMassageCubit.new)
-    ..registerFactory<SwipeMassegeCubit>(SwipeMassegeCubit.new);
+    ..registerFactory<SwipeMassegeCubit>(SwipeMassegeCubit.new)
+    ..registerFactory<AddStoryCubit>(AddStoryCubit.new);
 }

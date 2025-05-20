@@ -169,6 +169,7 @@ class _EnterMessageState extends State<EnterMessage> {
                       lastMessageTime: DateTime.now(),
                       lastMessage: _messageController.text,
                     ),
+                    user: widget.user,
                   );
                   _messageController.clear();
                   context.read<SwipeMassegeCubit>().onSwipeCancel();

@@ -37,4 +37,38 @@ class GetAllContactsCubit extends Cubit<GetAllContactsState> {
       emit(GetAllContactsError(e.toString()));
     }
   }
+
+  // search contacts
+  Future<void> searchContacts(String query) async {
+    emit(GetAllContactsLoading());
+    try {
+      final response = await supabase.from('users').select();
+
+      log('response: $response');
+
+      final userId = SharedPref.getValue(PrefKey.userId);
+      response.removeWhere((element) => element['id'] == userId);
+
+      final filtered =
+          response.where((element) {
+            final fullName =
+                '${element['frist_name']} ${element['last_name']}'
+                    .toLowerCase();
+            final phone =
+                element['phone_number']?.toString().toLowerCase() ?? '';
+            return fullName.contains(query) || phone.contains(query);
+          }).toList();
+
+      if (filtered.isEmpty) {
+        emit(GetAllContactsEmpty());
+        return;
+      }
+
+      final data = filtered.map((e) => PersonalInfoModel.fromJson(e)).toList();
+      emit(GetAllContactsSuccess(contacts: data));
+    } catch (e) {
+      log('Error searching contacts: $e');
+      emit(GetAllContactsError(e.toString()));
+    }
+  }
 }

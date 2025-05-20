@@ -1,9 +1,14 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:chateo/core/service/push_notification/firebase_cloud_messaging.dart';
 import 'package:chateo/features/conversation/chats/data/model/chat_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../../core/service/shared_pref/pref_key.dart';
+import '../../../../../core/service/shared_pref/shared_pref.dart';
+import '../../../../Auth/loginPersonalInfo/data/models/personal_info_model.dart';
 
 part 'send_massage_state.dart';
 
@@ -12,7 +17,10 @@ class SendMassageCubit extends Cubit<SendMassageState> {
 
   final supabase = Supabase.instance.client;
 
-  Future<void> sendMassage({required ChatModel chat}) async {
+  Future<void> sendMassage({
+    required ChatModel chat,
+    required PersonalInfoModel user,
+  }) async {
     emit(SendMassageLoading());
     try {
       final response =
@@ -56,10 +64,62 @@ class SendMassageCubit extends Cubit<SendMassageState> {
           emit(SendMassageSuccess(chat: chat, chatId: response['id']));
         }
       }
+
+      final currentUserId = SharedPref.getValue(PrefKey.userId);
+
+      final userId =
+          chat.users.user1Id == currentUserId
+              ? chat.users.user1Id
+              : chat.users.user2Id;
+
+      await sendNotification(
+        body: chat.lastMessage,
+        chatId: response!['id'],
+        userId: userId,
+        userToken: user.token ?? '',
+      );
+
+      // await FirebaseCloudMessaging().sendNotification(
+      //   title: '${user.firstName} ${user.lastName}',
+      //   body: chat.lastMessage,
+      //   userToken: user.token ?? '',
+      //   userId: user.id!,
+      //   chatId: response!['id'],
+      // );
     } catch (e) {
       log('Error: $e');
       emit(SendMassageError(e.toString()));
     }
+  }
+}
+
+Future<void> sendNotification({
+  required String body,
+  required String chatId,
+  required String userId,
+  required String userToken,
+}) async {
+  final userResponse =
+      await Supabase.instance.client
+          .from('users')
+          .select()
+          .eq('id', userId)
+          .limit(1)
+          .maybeSingle();
+
+  // log('userResponse: $userResponse');
+
+  if (userResponse != null) {
+    final user = PersonalInfoModel.fromJson(userResponse);
+
+    await FirebaseCloudMessaging().sendNotification(
+      title: '${user.firstName} ${user.lastName}',
+      body: body,
+      userToken: userToken,
+      userId: userId,
+      chatId: chatId,
+      userImage: user.imageUrl,
+    );
   }
 }
 

@@ -7,7 +7,10 @@ final class VerifyOtpInitial extends VerifyOtpState {}
 
 final class VerifyOtpLoading extends VerifyOtpState {}
 
-final class VerifyOtpSuccess extends VerifyOtpState {}
+final class VerifyOtpSuccess extends VerifyOtpState {
+  final String token;
+  VerifyOtpSuccess({required this.token});
+}
 
 final class VerifyOtpFailed extends VerifyOtpState {
   final String message;

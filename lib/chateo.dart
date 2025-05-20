@@ -37,6 +37,7 @@ class Chateo extends StatelessWidget {
                       ? AppRoutes.mainScreen
                       : AppRoutes.onboarding,
               onGenerateRoute: AppRoutes.onGenerateRoute,
+              navigatorKey: sl<GlobalKey<NavigatorState>>(),
             );
           },
         ),

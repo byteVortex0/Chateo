@@ -34,6 +34,16 @@ class Contacts extends StatelessWidget {
               ),
               margin: EdgeInsets.symmetric(horizontal: 2.w),
               padding: EdgeInsets.zero,
+              onChanged: (value) {
+                if (value != null && value.isNotEmpty) {
+                  context.read<GetAllContactsCubit>().searchContacts(
+                    value.toLowerCase(),
+                  );
+                } else {
+                  context.read<GetAllContactsCubit>().getAllContacts();
+                }
+                return null;
+              },
             ),
             SizedBox(height: 10.h),
             Expanded(
