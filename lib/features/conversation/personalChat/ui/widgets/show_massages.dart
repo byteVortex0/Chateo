@@ -43,12 +43,13 @@ class _ShowMassagesState extends State<ShowMassages> {
 
   Future<void> checkExistingChat() async {
     if (widget.chat == null) {
+      final userId = SharedPref.getValue(PrefKey.userId);
       final response =
           await supabase
               .from('chats')
               .select('id, users')
               .or(
-                'users->>user1_id.eq.${widget.user.id!},users->>user2_id.eq.${widget.user.id!}',
+                'and(users->>user1_id.eq.$userId,users->>user2_id.eq.${widget.user.id!}),and(users->>user1_id.eq.${widget.user.id!},users->>user2_id.eq.$userId)',
               )
               .maybeSingle();
 
