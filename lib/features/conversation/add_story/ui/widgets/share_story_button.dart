@@ -1,21 +1,14 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:chateo/core/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/service/shared_pref/pref_key.dart';
-import '../../../../../core/service/shared_pref/shared_pref.dart';
-import '../../data/model/story_model.dart';
 import '../../logic/add_story/add_story_cubit.dart';
 
 class ShareStoryButton extends StatelessWidget {
-  const ShareStoryButton({super.key, this.image, this.textController});
+  const ShareStoryButton({super.key, this.onTap});
 
-  final File? image;
-  final TextEditingController? textController;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +36,7 @@ class ShareStoryButton extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 30.h),
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              log('text: ${textController?.text}');
-              if (image != null ||
-                  (textController != null && textController!.text.isNotEmpty)) {
-                context.read<AddStoryCubit>().addStory(
-                  story: StoryModel(
-                    storiesData: [
-                      StoryData(
-                        caption: textController!.text,
-                        imageUrl: image?.path,
-                        createdAt: DateTime.now(),
-                      ),
-                    ],
-                    userId: SharedPref.getValue(PrefKey.userId),
-                  ),
-                );
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Add an image or write text first"),
-                  ),
-                );
-              }
-            },
+            onPressed: onTap,
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,
               foregroundColor: Colors.white,
