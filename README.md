@@ -1,16 +1,47 @@
-# chateo
+# 💬 Chateo - Real-Time Chat App
+Chateo is a modern Flutter chat app designed for real-time messaging, stories (statuses), and push notifications. With smooth UI and dark/light mode support, Chateo offers a seamless chatting experience backed by Supabase and Firebase.
 
-A new Flutter project.
 
-## Getting Started
+## 🎥 Watch the Demo
+Check out the app demo on YouTube: [Watch Now](https://youtu.be/zCUuRUhwTYs)
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📲 Phone number authentication (via Firebase)
+- 💬 Real-time one-on-one messaging
+- 📷 Image sharing with cropping
+- 📌 Story (status) sharing & viewing
+- 🔔 Push notifications for new messages
+- 🌙 Light & Dark mode support
+- 📱 Responsive and minimal UI
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🛠️ Built With
+- Flutter
+- Dart
+- Firebase Auth for phone number verification
+- Supabase for scalable real-time backend & data storage
+- Shared Preferences for Local data
+- Bloc for state management
+- ScreenUtil for responsive UI
+- Flutter Local Notifications
+- Image Picker, Image Cropper, Extended Image
+- Shimmer for loading effects
+- GetIt for dependency injection
+- Dio for HTTP requests
+- Equatable & UUID for clean architecture
+
+📦 Full list of dependencies used is in the pubspec.yaml file.
+
+---
+
+## 📬 Contact
+
+Feel free to reach out if you have questions, feedback, or collaboration ideas!
+
+- 💼 LinkedIn: [Mahmoud Ahmed](https://www.linkedin.com/in/bytevortex0)
+- 📧 Email: mahmodahmed201559@gmail.com
+- 💬 WhatsApp: [Chat on WhatsApp](https://wa.me/201018452234)
