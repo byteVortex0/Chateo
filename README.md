@@ -3,7 +3,7 @@ Chateo is a modern Flutter chat app designed for real-time messaging, stories (s
 
 
 ## 🎥 Watch the Demo
-Check out the app demo on YouTube: [Watch Now](https://youtu.be/zCUuRUhwTYs?si=KLoOg-a7LyEPipcI)
+[![Watch the demo](https://img.youtube.com/vi/zCUuRUhwTYs/0.jpg)](https://youtu.be/zCUuRUhwTYs)
 
 ---
 
